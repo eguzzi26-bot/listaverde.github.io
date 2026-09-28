@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Verde - Centro de Estudiantes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at top, #163d16 0%, #071007 45%, #020402 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Manchas decorativas */
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            background: #39ff14;
+            filter: blur(130px);
+            opacity: .12;
+            z-index: -1;
+        }
+
+        body::before {
+            top: -100px;
+            left: -100px;
+        }
+
+        body::after {
+            bottom: -100px;
+            right: -100px;
+        }
+
+        header {
+            padding: 25px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(57,255,20,.25);
+            background: rgba(0,0,0,.45);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            color: #39ff14;
+            font-size: 25px;
+            font-weight: 900;
+            text-shadow: 0 0 15px #39ff14;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: bold;
+            transition: .3s;
+        }
+
+        nav a:hover {
+            color: #39ff14;
+            text-shadow: 0 0 10px #39ff14;
+        }
+
+        /* PORTADA */
+
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .hero-content {
+            max-width: 900px;
+        }
+
+        .tag {
+            display: inline-block;
+            color: #39ff14;
+            border: 1px solid #39ff14;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            box-shadow: 0 0 20px rgba(57,255,20,.2);
+        }
+
+        h1 {
+            font-size: clamp(55px, 10vw, 120px);
+            line-height: .85;
+            font-weight: 1000;
+            text-transform: uppercase;
+            color: #39ff14;
+            text-shadow:
+                0 0 5px #39ff14,
+                0 0 25px rgba(57,255,20,.7);
+        }
+
+        .subtitulo {
+            font-size: 24px;
+            margin-top: 30px;
+            color: #ddd;
+        }
+
+        .frase {
+            margin: 20px auto;
+            max-width: 600px;
+            color: #aaa;
+            font-size: 17px;
+        }
+
+        .botones {
+            margin-top: 35px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 900;
+            transition: .3s;
+        }
+
+        .btn-verde {
+            background: #39ff14;
+            color: #020402;
+            box-shadow: 0 0 25px rgba(57,255,20,.45);
+        }
+
+        .btn-verde:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 0 40px rgba(57,255,20,.8);
+        }
+
+        .btn-outline {
+            color: #39ff14;
+            border: 2px solid #39ff14;
+        }
+
+        .btn-outline:hover {
+            background: #39ff14;
+            color: #000;
+        }
+
+        /* SECCIONES */
+
+        section {
+            padding: 90px 8%;
+        }
+
+        .titulo-seccion {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 50px;
+        }
+
+        .titulo-seccion span {
+            color: #39ff14;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 25px;
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .card {
+            background: rgba(10,20,10,.8);
+            border: 1px solid rgba(57,255,20,.3);
+            border-radius: 18px;
+            padding: 30px;
+            text-align: center;
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: #39ff14;
+            box-shadow: 0 0 30px rgba(57,255,20,.18);
+        }
+
+        .icono {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #39ff14;
+            margin-bottom: 12px;
+            font-size: 23px;
+        }
+
+        .card p {
+            color: #aaa;
+            line-height: 1.5;
+        }
+
+        /* PROPUESTAS */
+
+        .propuestas {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .propuesta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px;
+            margin: 15px 0;
+            background: rgba(57,255,20,.05);
+            border-left: 5px solid #39ff14;
+            border-radius: 10px;
+        }
+
+        .numero {
+            font-size: 35px;
+            font-weight: 900;
+            color: #39ff14;
+        }
+
+        .propuesta h3 {
+            margin-bottom: 5px;
+        }
+
+        .propuesta p {
+            color: #aaa;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            padding: 45px 20px;
+            border-top: 1px solid rgba(57,255,20,.2);
+            background: #020502;
+        }
+
+        footer strong {
+            color: #39ff14;
+        }
+
+        .redes {
+            margin-top: 15px;
+            color: #888;
+        }
+
+        @media(max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin: 0 8px;
+            }
+
+            .propuesta {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🟢 LISTA VERDE</div>
+
+    <nav>
+        <a href="#inicio">Inicio</a>
+        <a href="#propuestas">Propuestas</a>
+        <a href="#equipo">Equipo</a>
+    </nav>
+</header>
+
+
+<!-- PORTADA -->
+
+<section class="hero" id="inicio">
+
+    <div class="hero-content">
+
+        <div class="tag">
+            CENTRO DE ESTUDIANTES
+        </div>
+
+        <h1>LISTA<br>VERDE</h1>
+
+        <div class="subtitulo">
+            💚 La voz de los estudiantes
+        </div>
+
+        <p class="frase">
+            Una lista hecha por estudiantes, para estudiantes.
+            Queremos una escuela donde todos podamos participar,
+            proponer y ser escuchados.
+        </p>
+
+        <div class="botones">
+            <a href="#propuestas" class="btn btn-verde">
+                VER PROPUESTAS
+            </a>
+
+            <a href="#equipo" class="btn btn-outline">
+                CONOCÉ EL EQUIPO
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- IDEAS -->
+
+<section>
+
+    <h2 class="titulo-seccion">
+        ¿Qué <span>queremos?</span>
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icono">🗣️</div>
+            <h3>Participación</h3>
+            <p>
+                Que todos los estudiantes puedan
+                dar su opinión y ser escuchados.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icono">🚿</div>
+            <h3>Mejor escuela</h3>
+            <p>
+                Trabajar para mejorar los espacios
+                que usamos todos los días.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icono">🎉</div>
+            <h3>Actividades</h3>
+            <p>
+                Organizar eventos, torneos y
+                actividades para toda la escuela.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="icono">🤝</div>
+            <h3>Unidad</h3>
+            <p>
+                Trabajar juntos para conseguir
+                cambios reales.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROPUESTAS -->
+
+<section id="propuestas">
+
+    <h2 class="titulo-seccion">
+        Nuestras <span>propuestas</span>
+    </h2>
+
+    <div class="propuestas">
+
+        <div class="propuesta">
+            <div class="numero">01</div>
+            <div>
+                <h3>Baños en mejores condiciones</h3>
+                <p>
+                    Gestionar mejoras y buscar una forma
+                    de mantenerlos cuidados entre todos.
+                </p>
+            </div>
+        </div>
+
+        <div class="propuesta">
+            <div class="numero">02</div>
+            <div>
+                <h3>Más actividades</h3>
+                <p>
+                    Torneos, juegos, eventos y propuestas
+                    elegidas por los estudiantes.
+                </p>
+            </div>
+        </div>
+
+        <div class="propuesta">
+            <div class="numero">03</div>
+            <div>
+                <h3>Escuchar a los cursos</h3>
+                <p>
+                    Crear un espacio donde cada curso
+                    pueda presentar ideas y problemas.
+                </p>
+            </div>
+        </div>
+
+        <div class="propuesta">
+            <div class="numero">04</div>
+            <div>
+                <h3>Más comunicación</h3>
+                <p>
+                    Informar claramente qué se propone,
+                    qué se consigue y qué falta hacer.
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- EQUIPO -->
+
+<section id="equipo">
+
+    <h2 class="titulo-seccion">
+        Nuestro <span>equipo</span>
+    </h2>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="icono">👑</div>
+            <h3>Presidencia</h3>
+            <p>Nombre del candidato/a</p>
+        </div>
+
+        <div class="card">
+            <div class="icono">📋</div>
+            <h3>Secretaría</h3>
+            <p>Nombre del candidato/a</p>
+        </div>
+
+        <div class="card">
+            <div class="icono">💰</div>
+            <h3>Tesorería</h3>
+            <p>Nombre del candidato/a</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<footer>
+    <strong>LISTA VERDE 💚</strong>
+    <div class="redes">
+        Centro de Estudiantes · Tu voz, nuestras propuestas
+    </div>
+</footer>
+
+</body>
+</html>
